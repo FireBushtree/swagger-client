@@ -12,7 +12,7 @@ export interface Menu {
 
 export default function SideBar () {
   const menuList = [
-    { label: 'home', icon: iconHome, activeIcon: iconHomeActive, path: '/' }
+    { label: 'home', icon: iconHome, activeIcon: iconHomeActive, path: '/home' }
   ]
   const location = useLocation()
 
