@@ -1,0 +1,91 @@
+.swaggerForm {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 480px;
+  height: 240px;
+  background: @black-color;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 @main-color;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+
+  &Content {
+    flex: 1;
+    height: 0;
+  }
+
+  .formBlock + .formBlock {
+    padding-top: 8px;
+  }
+
+  .formBlock {
+    &Label {
+      font-size: 18px;
+    }
+  }
+
+  .input {
+    margin-top: 12px;
+    background: transparent;
+    border: 1px solid rgb(217, 217, 217);
+    height: 32px;
+    width: 100%;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #fff;
+    padding: 0 8px;
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.2s;
+
+    &:focus {
+      border-color: @main-color;
+    }
+  }
+
+  .error {
+    height: 24px;
+    line-height: 24px;
+    font-size: 12px;
+    color: #ff0000;
+    padding-left: 4px;
+  }
+
+  .swaggerFormFooter {
+    display: flex;
+    justify-content: flex-end;
+
+    .button {
+      min-width: 72px;
+      font-size: 14px;
+      margin-right: 16px;
+      padding: 8px 0;
+      border: 1px solid #fff;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        border-color: @main-color;
+        color: @main-color;
+      }
+
+      &.main {
+        background: @main-color;
+        border-color: @main-color;
+
+        &:hover {
+          color: #fff;
+          background: darken(@main-color, 10%);
+          border-color: darken(@main-color, 10%);
+        }
+      }
+    }
+  }
+}

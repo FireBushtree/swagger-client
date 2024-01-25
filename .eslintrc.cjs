@@ -20,6 +20,8 @@ module.exports = {
         "@typescript-eslint/strict-boolean-expressions": 'off',
         "@typescript-eslint/explicit-function-return-type": 'off',
         "react/react-in-jsx-scope": 'off',
+        'react/prop-types': 'off',
+        '@typescript-eslint/no-misused-promises': 'off',
         "react/jsx-indent": [2, 2, {checkAttributes: true}]
     }
 }
