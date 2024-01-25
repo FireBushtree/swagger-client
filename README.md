@@ -1,7 +1,7 @@
-# Tauri + React + Typescript
+# Swagger Client
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+## Features
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+[ ] manage swagger document
+[ ] search api by uri or name
+[ ] copy uri with template
