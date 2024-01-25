@@ -1,4 +1,61 @@
 .home {
   padding: 12px;
   color: #fff;
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+
+  .swaggerList {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .swaggerBlock {
+    width: calc(20% - 24px);
+    margin-bottom: 24px;
+    padding: 0 12px;
+  }
+
+  .create {
+    @common-color: #999;
+    @light-color: rgba(108, 111, 195, 1);
+    border: 1px solid @common-color;
+    height: 100%;
+    border-radius: 8px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      background: @common-color;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+    }
+
+    &::before {
+      width: 2px;
+      height: 32px;
+    }
+
+    &::after {
+      width: 32px;
+      height: 2px;
+    }
+
+    &:hover {
+      border-color: @light-color;
+
+      &::before,
+      &::after {
+        background: @light-color;
+      }
+    }
+  }
 }
