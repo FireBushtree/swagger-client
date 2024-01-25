@@ -37,8 +37,8 @@
         "fullscreen": false,
         "resizable": true,
         "title": "swagger-client",
-        "width": 800,
-        "height": 600
+        "width": 1300,
+        "height": 760
       }
     ]
   }

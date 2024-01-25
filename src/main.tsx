@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import router from './router'
+
+// css
 import 'normalize.css'
 
 const root = document.getElementById('root')
