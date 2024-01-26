@@ -40,12 +40,11 @@ export default function Home () {
         ))}
       </div>
 
-      {showSwaggerForm && (
-        <SwaggerForm
-          record={currentDoc}
-          onClose={closeEditDialog}
-        />
-      )}
+      <SwaggerForm
+        visible={showSwaggerForm}
+        record={currentDoc}
+        onClose={closeEditDialog}
+      />
     </div>
   )
 }
