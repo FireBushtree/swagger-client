@@ -23,6 +23,7 @@ module.exports = {
         'react/prop-types': 'off',
         '@typescript-eslint/no-misused-promises': 'off',
         '@typescript-eslint/no-floating-promises': 'off',
-        "react/jsx-indent": [2, 2, {checkAttributes: true}]
+        "react/jsx-indent": [2, 2, {checkAttributes: true}],
+        '@typescript-eslint/no-non-null-assertion': 'off'
     }
 }

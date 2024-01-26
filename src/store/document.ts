@@ -1,4 +1,4 @@
-import { type SwaggerDocument } from '@/utils'
+import type SwaggerDocument from '@/class/SwaggerDocument'
 import { create } from 'zustand'
 
 interface DocumentStoreState {
@@ -8,5 +8,5 @@ interface DocumentStoreState {
 
 export const useDocumentStore = create<DocumentStoreState>((set) => ({
   documentList: [],
-  updateDocument: (documentList: SwaggerDocument[]) => { set(() => ({ documentList })) }
+  updateDocument: (documentList) => { set(() => ({ documentList })) }
 }))

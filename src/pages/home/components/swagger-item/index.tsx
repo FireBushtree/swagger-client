@@ -8,6 +8,8 @@ import { delDocumentLocally } from '@/utils'
 import styles from './index.module.less'
 import { useDocumentStore } from '@/store/document'
 import type SwaggerDocument from '@/class/SwaggerDocument'
+import { useNavigate } from 'react-router-dom'
+import { useMenuStore } from '@/store/menu'
 
 export interface SwaggerItemProps {
   record: SwaggerDocument
@@ -20,6 +22,17 @@ const SwaggerItem: React.FC<SwaggerItemProps> = (props) => {
   const { modal } = App.useApp()
   const { confirm } = modal
   const updateDocument = useDocumentStore((state) => state.updateDocument)
+  const addMenu = useMenuStore(state => state.addMenu)
+
+  const navigate = useNavigate()
+
+  const openDocument = () => {
+    // 1. save menu
+    addMenu(record)
+
+    // 2. navigate
+    navigate(`/doc/${record.id}`)
+  }
 
   const showConfirm = () => {
     confirm({
@@ -37,13 +50,14 @@ const SwaggerItem: React.FC<SwaggerItemProps> = (props) => {
   }
 
   return (
-    <div className={styles.swaggerItem}>
+    <div className={styles.swaggerItem} onClick={openDocument}>
       <div className={styles.swaggerItemName}>{record.name}</div>
       <div className={styles.swaggerItemAddr}>{record.address}</div>
 
       <div className={`${styles.swaggerItemAction} ${styles.edit}`}>
         <Button
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation()
             onEdit(record)
           }}
           size="small"
@@ -56,7 +70,10 @@ const SwaggerItem: React.FC<SwaggerItemProps> = (props) => {
 
       <div className={`${styles.swaggerItemAction} ${styles.del}`}>
         <Button
-          onClick={showConfirm}
+          onClick={(e) => {
+            e.stopPropagation()
+            showConfirm()
+          }}
           size="small"
           type="primary"
           shape="circle"

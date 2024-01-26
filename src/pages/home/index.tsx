@@ -1,24 +1,14 @@
 import SwaggerItem from './components/swagger-item'
 import SwaggerForm from './components/swagger-form'
 import styles from './index.module.less'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDocumentStore } from '@/store/document'
-import { getDocumentLocally } from '@/utils'
 import type SwaggerDocument from '@/class/SwaggerDocument'
 
 export default function Home () {
   const [currentDoc, setCurrentDoc] = useState<SwaggerDocument>()
   const [showSwaggerForm, setShowSwaggerForm] = useState(false)
   const documentList = useDocumentStore((state) => state.documentList)
-  const updateDocument = useDocumentStore((state) => state.updateDocument)
-  const initDocument = async () => {
-    const documentList = await getDocumentLocally()
-    updateDocument(documentList)
-  }
-
-  useEffect(() => {
-    initDocument()
-  }, [])
 
   const hasDocument = documentList.length > 0
   const showEditDialog = (record: SwaggerDocument) => {

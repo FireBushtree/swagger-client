@@ -1,0 +1,33 @@
+.document {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &Header {
+    display: flex;
+    align-items: center;
+    background: @primary-color;
+    padding: 8px 12px;
+    justify-content: space-between;
+
+    .searchBar {
+      width: 280px;
+    }
+
+    .spec {
+      display: flex;
+      align-items: center;
+
+      &Text {
+        margin-right: 12px;
+      }
+    }
+  }
+
+  &Content {
+    flex: 1;
+    height: 0;
+    overflow: auto;
+  }
+}

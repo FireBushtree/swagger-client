@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { ConfigProvider, App } from 'antd'
+import Container from './container'
 import router from './router'
 
 // css
@@ -19,7 +20,9 @@ const root = document.getElementById('root')
         }}
     >
       <App>
-        <RouterProvider router={router} />
+        <Container>
+          <RouterProvider router={router} />
+        </Container>
       </App>
     </ConfigProvider>
   </React.StrictMode>
