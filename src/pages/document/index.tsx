@@ -24,14 +24,17 @@ export default function Document () {
       const list = res.data
       const [first] = list
       setResourceList(list)
-
-      first && setCurrentResource(first.url)
+      first && setCurrentResource(first.location)
     }
   }
 
   useEffect(() => {
     getResourceList()
-  }, [])
+  }, [id])
+
+  useEffect(() => {
+    console.log(id)
+  }, [id])
 
   useEffect(() => {
     if (!currentResource) {
@@ -61,7 +64,7 @@ export default function Document () {
               placeholder="please select a spec"
               options={resourceList.map((item) => ({
                 label: item.name,
-                value: item.url
+                value: item.location
               }))}
             />
           </div>
