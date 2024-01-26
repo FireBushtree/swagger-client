@@ -1,4 +1,5 @@
-import { findDocumentIdx, type SwaggerDocument } from '.'
+import type SwaggerDocument from '@/class/SwaggerDocument'
+import { findDocumentIdx } from '.'
 
 const DOCUMENT_LOCALLY_KEY = 'swagger-client-document-config'
 

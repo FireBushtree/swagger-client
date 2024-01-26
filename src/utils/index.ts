@@ -1,15 +1,11 @@
+import type SwaggerDocument from '@/class/SwaggerDocument'
 import * as browser from './browser'
 import * as tauri from './tauri'
-
-export interface SwaggerDocument {
-  name: string
-  address: string
-}
 
 const isTauriEnv = () => window && window.__TAURI__
 
 export const findDocumentIdx = (documentList: SwaggerDocument[], document: SwaggerDocument) => {
-  return documentList.findIndex(item => item.address === document.address)
+  return documentList.findIndex(item => item.id === document.id)
 }
 
 export const getDocumentLocally = async () => {

@@ -4,8 +4,10 @@ import styles from './index.module.less'
 import { useEffect, useState } from 'react'
 import { useDocumentStore } from '@/store/document'
 import { getDocumentLocally } from '@/utils'
+import type SwaggerDocument from '@/class/SwaggerDocument'
 
 export default function Home () {
+  const [currentDoc, setCurrentDoc] = useState<SwaggerDocument>()
   const [showSwaggerForm, setShowSwaggerForm] = useState(false)
   const documentList = useDocumentStore((state) => state.documentList)
   const updateDocument = useDocumentStore((state) => state.updateDocument)
@@ -19,6 +21,15 @@ export default function Home () {
   }, [])
 
   const hasDocument = documentList.length > 0
+  const showEditDialog = (record: SwaggerDocument) => {
+    setShowSwaggerForm(true)
+    setCurrentDoc(record)
+  }
+
+  const closeEditDialog = () => {
+    setShowSwaggerForm(false)
+    setCurrentDoc(undefined)
+  }
 
   return (
     <div className={styles.home}>
@@ -34,16 +45,15 @@ export default function Home () {
 
         {documentList.map((item, index) => (
           <div className={styles.swaggerBlock} key={item.name + index}>
-            <SwaggerItem record={item} />
+            <SwaggerItem onEdit={showEditDialog} record={item} />
           </div>
         ))}
       </div>
 
       {showSwaggerForm && (
         <SwaggerForm
-          onClose={() => {
-            setShowSwaggerForm(false)
-          }}
+          record={currentDoc}
+          onClose={closeEditDialog}
         />
       )}
     </div>

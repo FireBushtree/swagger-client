@@ -1,5 +1,6 @@
 import { BaseDirectory, createDir, exists, readTextFile, writeFile } from '@tauri-apps/api/fs'
-import { findDocumentIdx, type SwaggerDocument } from '.'
+import { findDocumentIdx } from '.'
+import type SwaggerDocument from '@/class/SwaggerDocument'
 
 export const CONFIG_FILE_NAME = 'swagger-client.conf.json'
 const appDataDir = BaseDirectory.AppData

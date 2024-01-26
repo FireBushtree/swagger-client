@@ -1,19 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './index.module.less'
 import { saveDocumentLocally } from '@/utils'
 import { useDocumentStore } from '@/store/document'
+import SwaggerDocument from '@/class/SwaggerDocument'
 
 export interface SwaggerFormProps {
+  record?: SwaggerDocument
   onClose: () => any
 }
 
 const SwaggerForm: React.FC<SwaggerFormProps> = (props) => {
-  const updateDocument = useDocumentStore(state => state.updateDocument)
-  const { onClose } = props
+  const updateDocument = useDocumentStore((state) => state.updateDocument)
+  const { onClose, record } = props
   const [name, setName] = useState('')
   const [address, setAddress] = useState('')
   const [nameError, setNameError] = useState('')
   const [addressError, setAddressError] = useState('')
+
+  useEffect(() => {
+    if (!record) {
+      return
+    }
+
+    const { name, address } = record
+    setName(name)
+    setAddress(address)
+  }, [])
 
   const handleNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNameError('')
@@ -36,7 +48,9 @@ const SwaggerForm: React.FC<SwaggerFormProps> = (props) => {
     }
 
     // 2. save
-    const documentList = await saveDocumentLocally({ name, address })
+    const documentList = await saveDocumentLocally(
+      new SwaggerDocument({ ...record, name, address })
+    )
     updateDocument(documentList)
 
     onClose()
