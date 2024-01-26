@@ -10,8 +10,16 @@ const isTauriEnv = () => window && window.__TAURI__
 
 export const saveDocumentLocally = async (document: SwaggerDocument) => {
   if (isTauriEnv()) {
-    await tauri.saveDocumentLocally(document)
+    return await tauri.saveDocumentLocally(document)
   } else {
-    browser.saveDocumentLocally(document)
+    return browser.saveDocumentLocally(document)
+  }
+}
+
+export const getDocumentLocally = async () => {
+  if (isTauriEnv()) {
+    return await tauri.getDocumentLocally()
+  } else {
+    return browser.getDocumentLocally()
   }
 }

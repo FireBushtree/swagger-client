@@ -25,6 +25,12 @@
     position: relative;
     cursor: pointer;
     transition: all 0.3s;
+    box-sizing: border-box;
+
+    &.only {
+      height: 72px;
+      width: 160px;
+    }
 
     &::before,
     &::after {

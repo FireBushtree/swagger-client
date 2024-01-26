@@ -12,7 +12,7 @@ export async function hasConfigFile () {
   return await exists(CONFIG_FILE_NAME, { dir: appDataDir })
 }
 
-export async function getDocumentList () {
+export async function getDocumentLocally () {
   const fileContent = await readTextFile(CONFIG_FILE_NAME, { dir: appDataDir })
   try {
     const documentList = JSON.parse(fileContent) as SwaggerDocument[]
@@ -26,7 +26,7 @@ export const saveDocumentLocally = async (document: SwaggerDocument) => {
   const hasFile = await hasConfigFile()
 
   if (hasFile) {
-    const documentList = await getDocumentList()
+    const documentList = await getDocumentLocally()
     const targetIdx = documentList.findIndex(item => item.address === document.address)
     if (targetIdx === -1) {
       // create
@@ -37,8 +37,10 @@ export const saveDocumentLocally = async (document: SwaggerDocument) => {
     }
 
     await writeFile(CONFIG_FILE_NAME, JSON.stringify(documentList), { dir: appDataDir })
+    return documentList
   } else {
     await createConfigDir()
     await writeFile(CONFIG_FILE_NAME, JSON.stringify([document]), { dir: appDataDir })
+    return [document]
   }
 }

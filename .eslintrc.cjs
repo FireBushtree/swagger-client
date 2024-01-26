@@ -22,6 +22,7 @@ module.exports = {
         "react/react-in-jsx-scope": 'off',
         'react/prop-types': 'off',
         '@typescript-eslint/no-misused-promises': 'off',
+        '@typescript-eslint/no-floating-promises': 'off',
         "react/jsx-indent": [2, 2, {checkAttributes: true}]
     }
 }

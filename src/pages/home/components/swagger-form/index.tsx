@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import styles from './index.module.less'
 import { saveDocumentLocally } from '@/utils'
+import { useDocumentStore } from '@/store/document'
 
 export interface SwaggerFormProps {
   onClose: () => any
 }
 
 const SwaggerForm: React.FC<SwaggerFormProps> = (props) => {
+  const updateDocument = useDocumentStore(state => state.updateDocument)
   const { onClose } = props
   const [name, setName] = useState('')
   const [address, setAddress] = useState('')
@@ -26,13 +28,16 @@ const SwaggerForm: React.FC<SwaggerFormProps> = (props) => {
     // 1. validate
     if (!name) {
       setNameError('please input name')
+      return
     }
     if (!address) {
       setAddressError('please input address')
+      return
     }
 
     // 2. save
-    await saveDocumentLocally({ name, address })
+    const documentList = await saveDocumentLocally({ name, address })
+    updateDocument(documentList)
 
     onClose()
   }

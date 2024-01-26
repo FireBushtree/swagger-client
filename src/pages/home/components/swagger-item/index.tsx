@@ -1,13 +1,18 @@
+import { type SwaggerDocument } from '@/utils'
 import styles from './index.module.less'
+export interface SwaggerItemProps {
+  record: SwaggerDocument
+}
 
-const SwaggerItem: React.FC = () => {
+const SwaggerItem: React.FC<SwaggerItemProps> = (props) => {
+  const { record } = props
   return (
     <div className={styles.swaggerItem}>
       <div className={styles.swaggerItemName}>
-        高新区项目
+        { record.name }
       </div>
       <div className={styles.swaggerItemAddr}>
-        http://gxqqf-gateway.cnsaas.com/swagger-ui.html#/
+        { record.address }
       </div>
     </div>
   )

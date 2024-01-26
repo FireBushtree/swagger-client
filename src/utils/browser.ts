@@ -23,7 +23,9 @@ export const saveDocumentLocally = (document: SwaggerDocument) => {
     }
 
     localStorage.setItem(DOCUMENT_LOCALLY_KEY, JSON.stringify(documentList))
+    return documentList
   } else {
     localStorage.setItem(DOCUMENT_LOCALLY_KEY, JSON.stringify([document]))
+    return [document]
   }
 }
