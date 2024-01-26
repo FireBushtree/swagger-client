@@ -22,7 +22,6 @@ export default function Document () {
     const res = await apiInstance.getSwaggerResources()
     if (res.ok) {
       const list = res.data
-      console.log(list)
       const [first] = list
       setResourceList(list)
 

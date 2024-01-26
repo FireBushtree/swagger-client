@@ -51,7 +51,7 @@ const SwaggerItem: React.FC<SwaggerItemProps> = (props) => {
 
   return (
     <div className={styles.swaggerItem} onClick={openDocument}>
-      <div className={styles.swaggerItemName}>{record.name}</div>
+      <div className={styles.swaggerItemLabel}>{record.name}</div>
       <div className={styles.swaggerItemAddr}>{record.address}</div>
 
       <div className={`${styles.swaggerItemAction} ${styles.edit}`}>

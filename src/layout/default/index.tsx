@@ -5,9 +5,11 @@ import { useEffect } from 'react'
 
 const Default: React.FC = () => {
   const navigate = useNavigate()
+
   useEffect(() => {
     navigate('/home')
   }, [])
+
   return (
     <div className={styles.default}>
       <SideBar />
