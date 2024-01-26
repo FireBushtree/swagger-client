@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
+import { ConfigProvider, App } from 'antd'
 import router from './router'
 
 // css
@@ -10,6 +11,16 @@ const root = document.getElementById('root')
 
 !!root && ReactDOM.createRoot(root).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#6C6FC3'
+          }
+        }}
+    >
+      <App>
+        <RouterProvider router={router} />
+      </App>
+    </ConfigProvider>
   </React.StrictMode>
 )

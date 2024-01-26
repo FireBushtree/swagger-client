@@ -8,6 +8,18 @@ export interface SwaggerDocument {
 
 const isTauriEnv = () => window && window.__TAURI__
 
+export const findDocumentIdx = (documentList: SwaggerDocument[], document: SwaggerDocument) => {
+  return documentList.findIndex(item => item.address === document.address)
+}
+
+export const getDocumentLocally = async () => {
+  if (isTauriEnv()) {
+    return await tauri.getDocumentLocally()
+  } else {
+    return browser.getDocumentLocally()
+  }
+}
+
 export const saveDocumentLocally = async (document: SwaggerDocument) => {
   if (isTauriEnv()) {
     return await tauri.saveDocumentLocally(document)
@@ -16,10 +28,10 @@ export const saveDocumentLocally = async (document: SwaggerDocument) => {
   }
 }
 
-export const getDocumentLocally = async () => {
+export const delDocumentLocally = async (document: SwaggerDocument) => {
   if (isTauriEnv()) {
-    return await tauri.getDocumentLocally()
+    return await tauri.delDocumentLocally(document)
   } else {
-    return browser.getDocumentLocally()
+    return browser.delDocumentLocally(document)
   }
 }
