@@ -2,11 +2,12 @@ import Api, { type SwaggerResourcesRes } from '@/class/Api'
 import { useDocumentStore } from '@/store/document'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Input, Select } from 'antd'
+import { Select } from 'antd'
 import SwaggerUI from 'swagger-ui'
 import 'swagger-ui/dist/swagger-ui.css'
 import styles from './index.module.less'
 import { useApiDocStore } from '@/store/api-doc'
+import SearchBar from '@/components/search-bar'
 
 export default function Document () {
   const routerParams = useParams()
@@ -36,7 +37,7 @@ export default function Document () {
 
   const getApiDocList = async (resource: SwaggerResourcesRes) => {
     const hasRequestedDoc = apiDocMap.get(id!)
-    console.log(hasRequestedDoc)
+
     if (hasRequestedDoc) {
       return
     }
@@ -78,7 +79,7 @@ export default function Document () {
     <div className={styles.document}>
       <div className={styles.documentHeader}>
         <div className={styles.searchBar}>
-          <Input placeholder="please input keyword" />
+          <SearchBar />
         </div>
         <div className={styles.spec}>
           <div className={styles.specText}>Select a spec</div>

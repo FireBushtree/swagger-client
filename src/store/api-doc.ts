@@ -23,8 +23,10 @@ export const useApiDocStore = create<ApiDocStoreState>(set => ({
     set((state) => {
       const newList = [...state.apiDocList]
       newList.push(apiDoc)
-      state.apiDocMap.set(apiDoc.id, apiDoc)
-      return { apiDocList: newList }
+
+      const newMap = new Map(state.apiDocMap)
+      newMap.set(apiDoc.id, apiDoc)
+      return { apiDocList: newList, apiDocMap: newMap }
     })
   }
 }))

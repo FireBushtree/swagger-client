@@ -58,7 +58,7 @@ const SwaggerForm: React.FC<SwaggerFormProps> = (props) => {
           name="name"
           rules={[{ required: true, message: 'please input name' }]}
         >
-          <Input placeholder="please input name" />
+          <Input autoCorrect="off" placeholder="please input name" />
         </Form.Item>
 
         <Form.Item
@@ -72,7 +72,7 @@ const SwaggerForm: React.FC<SwaggerFormProps> = (props) => {
             }
           ]}
         >
-          <Input placeholder="please input address" />
+          <Input autoCorrect="off" placeholder="please input address" />
         </Form.Item>
       </Form>
     </Modal>
