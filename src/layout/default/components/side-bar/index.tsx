@@ -65,8 +65,8 @@ export default function SideBar () {
         <img src="/icon.png" alt="icon" />
       </div>
 
-      <div className={styles.menuList}>{menuList.map(renderMenuItem)}</div>
       <div className={styles.menuList}>
+        {menuList.map(renderMenuItem)}
         {swaggerMenu.map(renderSwaggerMenu)}
       </div>
     </div>
