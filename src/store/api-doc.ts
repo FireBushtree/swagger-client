@@ -1,9 +1,7 @@
-import { type ApiDocRes } from '@/class/Api'
+import { type SwaggerResourcesResItem, type ApiDocRes } from '@/class/Api'
 import { create } from 'zustand'
 
-export type Resource = {
-  name: string
-} & ApiDocRes
+export type Resource = SwaggerResourcesResItem & ApiDocRes
 
 export interface ApiDoc {
   id: string

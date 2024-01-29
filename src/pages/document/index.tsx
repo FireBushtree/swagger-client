@@ -2,7 +2,7 @@ import Api, { type SwaggerResourcesRes } from '@/class/Api'
 import { useDocumentStore } from '@/store/document'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Select } from 'antd'
+import { Select, Skeleton } from 'antd'
 import SwaggerUI from 'swagger-ui'
 import 'swagger-ui/dist/swagger-ui.css'
 import styles from './index.module.less'
@@ -14,7 +14,9 @@ export default function Document () {
   const { id } = routerParams
   // cache vars
   const apiDocMap = useApiDocStore((state) => state.apiDocMap)
-  const addApiDocMap = useApiDocStore((state) => state.addApiDoc)
+  const currentApiDoc = apiDocMap.get(id!)
+
+  const addApiDoc = useApiDocStore((state) => state.addApiDoc)
 
   // basic vars
   const documentList = useDocumentStore((state) => state.documentList)
@@ -22,26 +24,24 @@ export default function Document () {
   const [currentResource, setCurrentResource] = useState<string>()
   const [resourceList, setResourceList] = useState<SwaggerResourcesRes>([])
   const apiInstance = new Api(swagger.address)
+  const showApiDoc = currentApiDoc && currentResource
+
+  const initResource = (list: SwaggerResourcesRes) => {
+    const [first] = list
+    setResourceList(list)
+    first && setCurrentResource(first.name)
+  }
 
   const getResourceList = async () => {
     const res = await apiInstance.getSwaggerResources()
     if (res.ok) {
       const list = res.data
-      const [first] = list
-      setResourceList(list)
-      first && setCurrentResource(first.location)
-
+      initResource(list)
       getApiDocList(list)
     }
   }
 
   const getApiDocList = async (resource: SwaggerResourcesRes) => {
-    const hasRequestedDoc = apiDocMap.get(id!)
-
-    if (hasRequestedDoc) {
-      return
-    }
-
     // do request
     try {
       const res = await Promise.all(
@@ -50,30 +50,37 @@ export default function Document () {
         )
       )
       const resourceList = res.map((item, index) => ({
-        name: resource[index].name,
+        ...resource[index],
         ...item.data
       }))
-      addApiDocMap({ id: id!, resourceList })
+      addApiDoc({ id: id!, resourceList })
     } catch (e) {
       console.log(e)
     }
   }
 
   useEffect(() => {
-    getResourceList()
+    if (currentApiDoc) {
+      initResource(currentApiDoc.resourceList)
+    } else {
+      getResourceList()
+    }
   }, [id])
 
   useEffect(() => {
-    if (!currentResource) {
+    if (!currentApiDoc || !currentResource) {
       return
     }
+
+    const { resourceList } = currentApiDoc
+    const spec = resourceList.find(item => item.name === currentResource)
 
     SwaggerUI({
       dom_id: '#swagger-content',
       docExpansion: 'none',
-      url: apiInstance.getApiDocsAddress(currentResource)
+      spec
     })
-  }, [currentResource])
+  }, [showApiDoc])
 
   return (
     <div className={styles.document}>
@@ -85,23 +92,35 @@ export default function Document () {
           <div className={styles.specText}>Select a spec</div>
           <div className={styles.specSelect}>
             <Select
-              style={{ width: '280px' }}
-              value={currentResource}
-              onChange={(val) => {
-                setCurrentResource(val)
-              }}
-              placeholder="please select a spec"
-              options={resourceList.map((item) => ({
-                label: item.name,
-                value: item.location
-              }))}
-            />
+            style={{ width: '280px' }}
+            value={currentResource}
+            onChange={(val) => {
+              setCurrentResource(val)
+            }}
+            placeholder="please select a spec"
+            options={resourceList.map((item) => ({
+              label: item.name,
+              value: item.name
+            }))}
+          />
           </div>
         </div>
       </div>
-      <div className={styles.documentContent}>
-        <div id="swagger-content"></div>
-      </div>
+
+      {
+        showApiDoc
+          ? (
+            <div className={styles.documentContent}>
+              <div id="swagger-content"></div>
+            </div>
+            )
+          : (
+            <div className={styles.documentLoading}>
+              <Skeleton active paragraph={{ rows: 10 }} />
+            </div>
+            )
+      }
+
     </div>
   )
 }

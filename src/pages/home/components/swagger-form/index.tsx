@@ -51,6 +51,7 @@ const SwaggerForm: React.FC<SwaggerFormProps> = (props) => {
       open={visible}
       onOk={handleConfirm}
       onCancel={handleCancel}
+      forceRender
     >
       <Form form={form} layout="vertical">
         <Form.Item
