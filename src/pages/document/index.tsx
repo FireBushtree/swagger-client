@@ -80,7 +80,7 @@ export default function Document () {
       docExpansion: 'none',
       spec
     })
-  }, [showApiDoc])
+  }, [id, showApiDoc])
 
   return (
     <div className={styles.document}>
