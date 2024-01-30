@@ -53,13 +53,13 @@ const SwaggerForm: React.FC<SwaggerFormProps> = (props) => {
       onCancel={handleCancel}
       forceRender
     >
-      <Form form={form} layout="vertical">
+      <Form autoCorrect='off' form={form} layout="vertical">
         <Form.Item
           label="Name"
           name="name"
           rules={[{ required: true, message: 'please input name' }]}
         >
-          <Input autoCorrect="off" placeholder="please input name" />
+          <Input placeholder="please input name" />
         </Form.Item>
 
         <Form.Item
@@ -73,7 +73,7 @@ const SwaggerForm: React.FC<SwaggerFormProps> = (props) => {
             }
           ]}
         >
-          <Input autoCorrect="off" placeholder="please input address" />
+          <Input placeholder="please input address" />
         </Form.Item>
       </Form>
     </Modal>

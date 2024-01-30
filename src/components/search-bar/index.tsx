@@ -1,5 +1,5 @@
 import { useApiDocStore } from '@/store/api-doc'
-import { Select, type SelectProps } from 'antd'
+import { AutoComplete, Form, type SelectProps } from 'antd'
 import { type BaseOptionType } from 'antd/es/select'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -17,7 +17,7 @@ const SearchBar: React.FC<SelectProps> = (props) => {
 
     const { resourceList } = apiDoc
     const apis: BaseOptionType[] = []
-    resourceList.forEach(item => {
+    resourceList.forEach((item) => {
       for (const [api] of Object.entries(item.paths)) {
         if (api.includes(keyword)) {
           apis.push({ label: api, value: api })
@@ -33,14 +33,16 @@ const SearchBar: React.FC<SelectProps> = (props) => {
   }
 
   return (
-    <Select
-      style={{ width: '280px' }}
-      filterOption={false}
-      onSearch={handleSearch}
-      showSearch
-      options={options}
-      {...props}
-    ></Select>
+    <Form autoCorrect="off">
+      <AutoComplete
+        style={{ width: '280px' }}
+        filterOption={false}
+        onSearch={handleSearch}
+        showSearch
+        options={options}
+        {...props}
+      ></AutoComplete>
+    </Form>
   )
 }
 
