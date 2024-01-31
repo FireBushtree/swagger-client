@@ -18,6 +18,10 @@ export async function writeConfigFile (documentList: SwaggerDocument[]) {
 }
 
 export async function getDocumentLocally () {
+  if (!await hasConfigFile()) {
+    return []
+  }
+
   const fileContent = await readTextFile(CONFIG_FILE_NAME, { dir: appDataDir })
   try {
     const documentList = JSON.parse(fileContent) as SwaggerDocument[]
