@@ -24,6 +24,7 @@ module.exports = {
         '@typescript-eslint/no-misused-promises': 'off',
         '@typescript-eslint/no-floating-promises': 'off',
         "react/jsx-indent": [2, 2, {checkAttributes: true}],
-        '@typescript-eslint/no-non-null-assertion': 'off'
+        '@typescript-eslint/no-non-null-assertion': 'off',
+        '@typescript-eslint/no-confusing-void-expression': 'off'
     }
 }
