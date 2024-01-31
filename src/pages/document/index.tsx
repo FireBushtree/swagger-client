@@ -8,6 +8,7 @@ import 'swagger-ui/dist/swagger-ui.css'
 import styles from './index.module.less'
 import { useApiDocStore } from '@/store/api-doc'
 import SearchBar from '@/components/search-bar'
+import { useMenuStore } from '@/store/menu'
 
 export default function Document () {
   const routerParams = useParams()
@@ -15,28 +16,26 @@ export default function Document () {
   // cache vars
   const apiDocMap = useApiDocStore((state) => state.apiDocMap)
   const currentApiDoc = apiDocMap.get(id!)
-
   const addApiDoc = useApiDocStore((state) => state.addApiDoc)
+  const activeMenu = useMenuStore((state) => state.activeMenu)
+  const updateActiveMenu = useMenuStore((state) => state.updateActiveMenu)
+  const { specName } = activeMenu[id!] || {}
+  const setSpecName = (spec: string) => { updateActiveMenu(id!, spec) }
 
   // basic vars
   const documentList = useDocumentStore((state) => state.documentList)
   const swagger = documentList.find((item) => item.id === id)!
-  const [currentResource, setCurrentResource] = useState<string>()
   const [resourceList, setResourceList] = useState<SwaggerResourcesRes>([])
   const apiInstance = new Api(swagger.address)
-  const showApiDoc = currentApiDoc && currentResource
-
-  const initResource = (list: SwaggerResourcesRes) => {
-    const [first] = list
-    setResourceList(list)
-    first && setCurrentResource(first.name)
-  }
+  const showApiDoc = currentApiDoc && specName
 
   const getResourceList = async () => {
     const res = await apiInstance.getSwaggerResources()
     if (res.ok) {
       const list = res.data
-      initResource(list)
+      const [first] = list
+      setResourceList(list)
+      first && setSpecName(first.name)
       getApiDocList(list)
     }
   }
@@ -61,19 +60,19 @@ export default function Document () {
 
   useEffect(() => {
     if (currentApiDoc) {
-      initResource(currentApiDoc.resourceList)
+      setResourceList(currentApiDoc.resourceList)
     } else {
       getResourceList()
     }
   }, [id])
 
   useEffect(() => {
-    if (!currentApiDoc || !currentResource) {
+    if (!currentApiDoc || !specName) {
       return
     }
 
     const { resourceList } = currentApiDoc
-    const spec = resourceList.find(item => item.name === currentResource)
+    const spec = resourceList.find((item) => item.name === specName)
 
     SwaggerUI({
       dom_id: '#swagger-content',
@@ -92,35 +91,32 @@ export default function Document () {
           <div className={styles.specText}>Select a spec</div>
           <div className={styles.specSelect}>
             <Select
-            style={{ width: '280px' }}
-            value={currentResource}
-            onChange={(val) => {
-              setCurrentResource(val)
-            }}
-            placeholder="please select a spec"
-            options={resourceList.map((item) => ({
-              label: item.name,
-              value: item.name
-            }))}
-          />
+              style={{ width: '280px' }}
+              value={specName}
+              onChange={(val) => {
+                setSpecName(val)
+              }}
+              placeholder="please select a spec"
+              options={resourceList.map((item) => ({
+                label: item.name,
+                value: item.name
+              }))}
+            />
           </div>
         </div>
       </div>
 
-      {
-        showApiDoc
-          ? (
-            <div className={styles.documentContent}>
-              <div id="swagger-content"></div>
-            </div>
-            )
-          : (
-            <div className={styles.documentLoading}>
-              <Skeleton active paragraph={{ rows: 10 }} />
-            </div>
-            )
-      }
-
+      {showApiDoc
+        ? (
+          <div className={styles.documentContent}>
+            <div id="swagger-content"></div>
+          </div>
+          )
+        : (
+          <div className={styles.documentLoading}>
+            <Skeleton active paragraph={{ rows: 10 }} />
+          </div>
+          )}
     </div>
   )
 }
