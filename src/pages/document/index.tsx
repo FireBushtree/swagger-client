@@ -9,6 +9,7 @@ import styles from './index.module.less'
 import { useApiDocStore } from '@/store/api-doc'
 import SearchBar from '@/components/search-bar'
 import { useMenuStore } from '@/store/menu'
+import { flushQueue } from '@/components/search-bar/event-queue'
 
 export default function Document () {
   const routerParams = useParams()
@@ -77,7 +78,13 @@ export default function Document () {
     SwaggerUI({
       dom_id: '#swagger-content',
       docExpansion: 'none',
-      spec
+      spec,
+      onComplete: () => {
+        // TODO: refine 100
+        setTimeout(() => {
+          flushQueue()
+        }, 100)
+      }
     })
   }, [id, showApiDoc])
 

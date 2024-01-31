@@ -11,11 +11,15 @@ import {
   handleApiSearch
 } from './utils'
 import { type DefaultOptionType } from 'antd/es/select'
+import { useMenuStore } from '@/store/menu'
+import { flushQueue, pushQueue } from './event-queue'
 
 let apiOptionMap: Map<string, SearchApiOption>
 let tagOptionMap: Map<string, SearchTagOption>
 const SearchBar: React.FC<SelectProps> = (props) => {
   const [searchValue, setSearchValue] = useState<string>()
+  const activeMenu = useMenuStore(state => state.activeMenu)
+  const updateActiveMenu = useMenuStore(state => state.updateActiveMenu)
 
   const apiDocMap = useApiDocStore((state) => state.apiDocMap)
   const [options, setOptions] = useState<SelectProps['options']>([])
@@ -46,6 +50,16 @@ const SearchBar: React.FC<SelectProps> = (props) => {
     setOptions(result)
   }
 
+  const updateSpec = (specName: string) => {
+    const currentApiDoc = activeMenu[id!]
+    if (currentApiDoc.specName === specName) {
+      return false
+    }
+
+    updateActiveMenu(id!, specName)
+    return true
+  }
+
   const handleSearchValueChange = (val: string) => {
     setSearchValue('')
     setTimeout(() => {
@@ -54,7 +68,11 @@ const SearchBar: React.FC<SelectProps> = (props) => {
 
     const tag = tagOptionMap.get(val)
     if (tag) {
-      handleTagSearch(tag)
+      const isUpdate = updateSpec(tag.specName)
+      pushQueue(() => handleTagSearch(tag))
+      if (!isUpdate) {
+        flushQueue()
+      }
     }
 
     const api = apiOptionMap.get(val)
