@@ -48,6 +48,7 @@ export function handleTagSearch (tag: SearchTagOption) {
 }
 
 export function handleApiSearch (api: SearchApiOption) {
+  console.log(api)
 }
 
 export function searchApi (resourceList: Resource[], keyword: string) {
