@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest, windows-latest]
+        platform: [macos-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout repository
@@ -34,18 +34,11 @@ jobs:
         run: |
           rustup update --no-self-update
 
-      - name: Install dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-latest'
-        run: |
-          sudo apt update
-          xargs sudo apt install -y < environment/apt_packages.txt
-
       - name: Install app dependencies from lockfile and build web
         # NOTE: comment out && yarn build if frontend does not have build script
         run: |
           npm install -g pnpm
           pnpm install
-          pnpm build
 
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
