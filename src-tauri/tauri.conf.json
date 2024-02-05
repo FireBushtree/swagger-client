@@ -11,14 +11,10 @@
   },
   "tauri": {
     "updater": {
-      "active": false,
+      "active": true,
       "dialog": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEFFMTRDQTFENjhBOTk2NkMKUldSc2xxbG9IY29Vcm9NVTVobDg2MGRoMTBiOENyVTQ1aHE0LzhXczJldjFLRm81S1ViMUJRT0UK",
-      "endpoints": [],
-      "windows": {
-        "installMode": "passive",
-        "installerArgs": []
-      }
+      "endpoints": []
     },
     "allowlist": {
       "all": false,
