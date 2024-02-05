@@ -3,7 +3,8 @@
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build",
     "devPath": "http://localhost:1420",
-    "distDir": "../dist"
+    "distDir": "../dist",
+    "withGlobalTauri": true
   },
   "package": {
     "productName": "Swagger Client",
@@ -14,7 +15,9 @@
       "active": true,
       "dialog": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEFFMTRDQTFENjhBOTk2NkMKUldSc2xxbG9IY29Vcm9NVTVobDg2MGRoMTBiOENyVTQ1aHE0LzhXczJldjFLRm81S1ViMUJRT0UK",
-      "endpoints": []
+      "endpoints": [
+        "https://gist.githubusercontent.com/FireBushtree/4bfd49211bb3e85049792b2c5eadcf24/raw/1d1b093fba1824800acca6051a0117e4bc82051f/swagger-client-updater.json"
+      ]
     },
     "allowlist": {
       "all": false,
